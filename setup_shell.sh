@@ -93,18 +93,19 @@ sudo mv blue.tmuxtheme /etc/tmux-themepack/ 2>>"$error_log"
 # Set up vim
 echo "[*] Setting up vim ..."
 
-# Setting up YouCompleteMe
-sudo apt install build-essential cmake vim-nox python3-dev -y 1>/dev/null 2>>"$error_log" && \
-sudo apt install mono-complete golang nodejs openjdk-17-jdk openjdk-17-jre npm -y 1>/dev/null 2>>"$error_log" && \
-
-mkdir -p ~/.vim/bundle && cd ~/.vim/bundle/ && git clone https://github.com/ycm-core/YouCompleteMe
-
-cd ./YouCompleteMe && \
-git submodule update --init --recursive && \
-python3 install.py --all
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Setting up vimrc
 cat >> /home/"$(logname)"/.vimrc << EOF
+" vim-plug: https://github.com/junegunn/vim-plug 
+vim9script
+plug#begin()
+
+Plug 'girishji/vimcomplete'
+
+plug#end()
+
 " CUSTOM SETTINGS BELOW
 set number
 set cursorline
